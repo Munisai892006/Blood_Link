@@ -66,6 +66,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(auth -> auth
+                        // Permit all frontend client routes, SPA entry points, static resources and HTML views
+                        .requestMatchers(request -> !request.getRequestURI().startsWith("/api")).permitAll()
                         .requestMatchers(
                                 "/",
                                 "/index.html",
@@ -95,8 +97,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/analytics/mission-control").permitAll()
                         // Public Blood Emergency Requests Query & Submission
                         .requestMatchers(HttpMethod.GET, "/api/requests").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/requests/public-submit").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/requests/track-public").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/requests/public", "/api/requests/public-submit").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/requests/track", "/api/requests/track-public").permitAll()
                         // Public Donor Certificate & Contribution Receipt Verification
                         .requestMatchers(HttpMethod.GET, "/api/donors/certificates/verify/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/payments/verify/**", "/api/payments/receipts/verify/**").permitAll()
@@ -137,6 +139,22 @@ public class SecurityConfig {
                                 "/api/gis", "/api/gis/**"
                         ).permitAll()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+                            response.getWriter().write("{\"success\":false,\"error\":\"UNAUTHORIZED\",\"message\":\"" + 
+                                (authException.getMessage() != null ? authException.getMessage().replace("\"", "\\\"") : "Authentication required") + "\"}");
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN);
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+                            response.getWriter().write("{\"success\":false,\"error\":\"FORBIDDEN\",\"message\":\"" + 
+                                (accessDeniedException.getMessage() != null ? accessDeniedException.getMessage().replace("\"", "\\\"") : "Access denied") + "\"}");
+                        })
                 );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

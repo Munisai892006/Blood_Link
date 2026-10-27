@@ -81,6 +81,7 @@ public class ExpressProxyController {
             "/api/auth/forgot-password",
             "/api/auth/reset-password",
             "/api/auth/change-password",
+            "/api/auth/mfa",
             "/api/auth/mfa/**",
             "/api/auth/verify-credential",
             "/api/auth/verify-credential/**"
@@ -109,6 +110,11 @@ public class ExpressProxyController {
                 }
             }
 
+            // Ensure Accept: application/json is present
+            if (request.getHeader("Accept") == null) {
+                reqBuilder.header("Accept", "application/json");
+            }
+
             // Forward HTTP Method and Body
             String method = request.getMethod().toUpperCase();
             if ("POST".equals(method) || "PUT".equals(method) || "PATCH".equals(method)) {
@@ -123,6 +129,22 @@ public class ExpressProxyController {
             HttpResponse<InputStream> resp = httpClient.send(reqBuilder.build(), HttpResponse.BodyHandlers.ofInputStream());
 
             response.setStatus(resp.statusCode());
+
+            String contentType = resp.headers().firstValue("content-type").orElse("");
+            if (contentType.toLowerCase().contains("text/html")) {
+                byte[] htmlBytes = resp.body().readAllBytes();
+                String htmlSnippet = new String(htmlBytes, java.nio.charset.StandardCharsets.UTF_8);
+                String cleanMsg = htmlSnippet.replaceAll("<[^>]*>", " ").replaceAll("\\s+", " ").trim();
+                if (cleanMsg.length() > 200) cleanMsg = cleanMsg.substring(0, 200) + "...";
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                String safeJson = String.format("{\"success\":false,\"error\":\"UPSTREAM_NON_JSON\",\"status\":%d,\"message\":\"%s\"}",
+                        resp.statusCode(),
+                        cleanMsg.replace("\"", "\\\"").replace("\n", " ").replace("\r", ""));
+                response.getOutputStream().write(safeJson.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                response.getOutputStream().flush();
+                return;
+            }
 
             // Copy response headers
             resp.headers().map().forEach((key, values) -> {
