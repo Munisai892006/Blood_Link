@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — LifeLink Organ Donation Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Medical Disclaimer Banner -->
+  <div class="medical-disclaimer text-center py-1">
+    <div class="container d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-shield-exclamation text-warning"></i>
+      <span><strong>Statutory Compliance:</strong> LifeLink operates under THOTA 1994. Strictly non-commercial medical logistics. Zero human organ buying/selling.</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-lifelink-navy sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <span>LifeLink</span>
+      </a>
+      <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <i class="bi bi-list fs-2 text-white"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link " href="cases.html">Donor Cases</a></li>
+          <li class="nav-item"><a class="nav-link " href="transport-dashboard.html">Live Transports</a></li>
+          <li class="nav-item"><a class="nav-link " href="funding-campaigns.html">Logistics Funding</a></li>
+          <li class="nav-item"><a class="nav-link " href="hospitals.html">Hospitals</a></li>
+          <li class="nav-item"><a class="nav-link " href="reports.html">Reports</a></li>
+        </ul>
+
+        <div id="navbarUserSection" class="d-flex align-items-center gap-2">
+          <!-- Populated by auth.js -->
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+  <div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <h2 class="fw-bold mb-1">Operational Command Dashboard</h2>
+        <p class="text-muted mb-0">Multi-Role Real-Time Coordination & Resource Deployment</p>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="cases.html" class="btn btn-lifelink-primary"><i class="bi bi-plus-circle me-1"></i>New Referral</a>
+        <a href="transport-dashboard.html" class="btn btn-lifelink-secondary"><i class="bi bi-geo-alt me-1"></i>Green Corridors</a>
+      </div>
+    </div>
+
+    <!-- Triage Metric Row -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3 col-sm-6">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small text-uppercase fw-semibold">Active Referrals</div>
+              <div class="fs-2 fw-bold text-danger" id="dashActiveCases">0</div>
+            </div>
+            <div class="stat-icon red"><i class="bi bi-folder-check"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small text-uppercase fw-semibold">Organs In Transit</div>
+              <div class="fs-2 fw-bold text-danger" id="dashOrgansInTransit">0</div>
+            </div>
+            <div class="stat-icon red"><i class="bi bi-heart-pulse"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small text-uppercase fw-semibold">Green Corridors</div>
+              <div class="fs-2 fw-bold text-success" id="dashCorridors">0</div>
+            </div>
+            <div class="stat-icon green"><i class="bi bi-shield-check"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="stat-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small text-uppercase fw-semibold">Logistics Subsidies</div>
+              <div class="fs-2 fw-bold text-success" id="dashFunds">₹0</div>
+            </div>
+            <div class="stat-icon green"><i class="bi bi-currency-rupee"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Live Transport Dispatch Feed -->
+      <div class="col-lg-8">
+        <div class="lifelink-card">
+          <div class="lifelink-card-header">
+            <h5 class="fw-bold mb-0"><i class="bi bi-radar text-danger me-2"></i>Active Transports & Corridors</h5>
+            <a href="transport-dashboard.html" class="btn btn-sm btn-outline-primary">View Full Map</a>
+          </div>
+          <div class="lifelink-card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small text-uppercase">
+                  <tr>
+                    <th>Mission Ref</th>
+                    <th>Route</th>
+                    <th>Status</th>
+                    <th>Temp</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dashTransportTable">
+                  <tr><td colspan="5" class="text-center py-4 text-muted">Loading active missions...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Donor Cases Queue -->
+        <div class="lifelink-card">
+          <div class="lifelink-card-header">
+            <h5 class="fw-bold mb-0"><i class="bi bi-list-check text-primary me-2"></i>Urgent Donor Referrals</h5>
+            <a href="cases.html" class="btn btn-sm btn-outline-secondary">All Cases</a>
+          </div>
+          <div class="lifelink-card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light small text-uppercase">
+                  <tr>
+                    <th>Case No</th>
+                    <th>Hospital</th>
+                    <th>Blood</th>
+                    <th>GCS</th>
+                    <th>Stage</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dashCaseTable">
+                  <tr><td colspan="6" class="text-center py-4 text-muted">Loading cases...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions & Alerts -->
+      <div class="col-lg-4">
+        <div class="lifelink-card mb-4">
+          <div class="lifelink-card-header">
+            <h5 class="fw-bold mb-0"><i class="bi bi-bell-fill text-warning me-2"></i>Operational Actions</h5>
+          </div>
+          <div class="lifelink-card-body">
+            <div class="d-grid gap-2">
+              <a href="cases.html" class="btn btn-outline-primary text-start"><i class="bi bi-clipboard-plus me-2"></i>Register Donor Referral</a>
+              <a href="organ-assessments.html" class="btn btn-outline-danger text-start"><i class="bi bi-heart me-2"></i>Organ Viability Review</a>
+              <a href="consent-documents.html" class="btn btn-outline-success text-start"><i class="bi bi-file-earmark-check me-2"></i>Form 6/8/10 Verification</a>
+              <a href="driver-dashboard.html" class="btn btn-outline-warning text-dark text-start"><i class="bi bi-truck me-2"></i>Driver Pilot Cockpit</a>
+              <a href="financial-dashboard.html" class="btn btn-outline-secondary text-start"><i class="bi bi-receipt me-2"></i>Finance Ledger & Audit</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTTO Statutory Helpline -->
+        <div class="card bg-lifelink-navy text-white rounded-4 p-4 shadow">
+          <h6 class="fw-bold text-uppercase text-danger mb-2"><i class="bi bi-telephone-inbound me-2"></i>24x7 Emergency Line</h6>
+          <p class="small text-light mb-3">Direct escalation to State & National Organ & Tissue Transplant Organization (NOTTO/ROTTO/SOTTO).</p>
+          <div class="fs-4 fw-bold mb-3">1800-11-4770</div>
+          <span class="badge bg-success">National Hotlink Verified</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="text-white mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-heart-pulse-fill text-danger"></i> LifeLink Platform
+          </h5>
+          <p class="text-secondary small">
+            National Smart Emergency Organ Donation Coordination, Green Corridor Real-Time Dispatch & Transparent Medical Logistics Funding.
+          </p>
+          <p class="small text-muted mb-0">Emergency Coordination Helpline: <strong>1800-11-4770</strong></p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6 class="text-white mb-3">Clinical Workflow</h6>
+          <ul class="list-unstyled small">
+            <li><a href="cases.html">Referral Queue</a></li>
+            <li><a href="transport-dashboard.html">Green Corridors</a></li>
+            <li><a href="hospitals.html">Accredited Centers</a></li>
+            <li><a href="driver-dashboard.html">Driver Cockpit</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6 class="text-white mb-3">Funding & Audit</h6>
+          <ul class="list-unstyled small">
+            <li><a href="funding-campaigns.html">Verified Campaigns</a></li>
+            <li><a href="financial-dashboard.html">Finance Reviewer Portal</a></li>
+            <li><a href="reports.html">Transparency Ledger</a></li>
+            <li><a href="terms.html">80G Tax Exemption</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="text-white mb-3">Statutory & Legal</h6>
+          <ul class="list-unstyled small">
+            <li><a href="terms.html">Non-Commercial Organ Policy</a></li>
+            <li><a href="privacy.html">DPDP Act Privacy Compliance</a></li>
+            <li><a href="terms.html">Form 6/8/10 Brain Death Guidelines</a></li>
+            <li><a href="https://notto.mohfw.gov.in/" target="_blank" rel="noopener">National NOTTO Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center small text-muted">
+        <div>&copy; 2026 LifeLink Platform. Built for B.Tech Computer Science Demonstration.</div>
+        <div>Strict Zero-Commercialization Standard</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tracking.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const stats = await api.getDashboardStats();
+      document.getElementById('dashActiveCases').innerText = stats.activeCases;
+      document.getElementById('dashOrgansInTransit').innerText = stats.organsInTransit;
+      document.getElementById('dashCorridors').innerText = stats.activeCorridors;
+      document.getElementById('dashFunds').innerText = formatINR(stats.totalFundingRaisedInr);
+
+      // Populate Transports
+      const transports = await api.getTransports();
+      const trBody = document.getElementById('dashTransportTable');
+      if (!transports || transports.length === 0) {
+        trBody.innerHTML = '<tr><td colspan="5" class="text-center py-3 text-muted">No active transports</td></tr>';
+      } else {
+        trBody.innerHTML = transports.slice(0, 5).map(t => `
+          <tr>
+            <td><strong>${t.trackingNumber}</strong></td>
+            <td><small>Center #${t.sourceHospitalId} → #${t.destinationHospitalId}</small></td>
+            <td>${getTransportBadge(t.status)}</td>
+            <td><span class="badge bg-light text-dark border">${t.lastReportedTemperatureCelsius ? t.lastReportedTemperatureCelsius.toFixed(1) + ' °C' : '3.2 °C'}</span></td>
+            <td><a href="transport-dashboard.html" class="btn btn-sm btn-outline-danger">Track</a></td>
+          </tr>
+        `).join('');
+      }
+
+      // Populate Cases
+      const cases = await api.getCases();
+      const caseBody = document.getElementById('dashCaseTable');
+      if (!cases || cases.length === 0) {
+        caseBody.innerHTML = '<tr><td colspan="6" class="text-center py-3 text-muted">No cases in queue</td></tr>';
+      } else {
+        caseBody.innerHTML = cases.slice(0, 5).map(c => `
+          <tr>
+            <td><strong>${c.caseNumber}</strong></td>
+            <td><small>Hospital #${c.referringHospitalId}</small></td>
+            <td><span class="badge bg-light text-dark border">${c.bloodGroup}</span></td>
+            <td><span class="badge bg-danger">${c.glasgowComaScale || 3}/15</span></td>
+            <td>${getWorkflowBadge(c.workflowStatus)}</td>
+            <td><a href="case-details.html?id=${c.id}" class="btn btn-sm btn-outline-primary">Details</a></td>
+          </tr>
+        `).join('');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
+</script>
+</body>
+</html>

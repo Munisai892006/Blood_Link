@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organ Viability — LifeLink Organ Donation Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="medical-disclaimer text-center py-1">
+    <div class="container d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-shield-exclamation text-warning"></i>
+      <span><strong>Statutory Compliance:</strong> LifeLink operates under THOTA 1994. Strictly non-commercial medical logistics. Zero human organ buying/selling.</span>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg bg-lifelink-navy sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <span>LifeLink</span>
+      </a>
+      <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <i class="bi bi-list fs-2 text-white"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cases.html">Donor Cases</a></li>
+          <li class="nav-item"><a class="nav-link " href="transport-dashboard.html">Live Transports</a></li>
+          <li class="nav-item"><a class="nav-link " href="funding-campaigns.html">Logistics Funding</a></li>
+          <li class="nav-item"><a class="nav-link " href="hospitals.html">Hospitals</a></li>
+          <li class="nav-item"><a class="nav-link " href="reports.html">Reports</a></li>
+        </ul>
+        <div id="navbarUserSection" class="d-flex align-items-center gap-2"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+  <div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <a href="cases.html" class="text-decoration-none small text-muted"><i class="bi bi-arrow-left me-1"></i>Back to Cases</a>
+        <h2 class="fw-bold mb-1">Organ Viability & Clinical Assessments</h2>
+        <p class="text-muted mb-0">Ischemia time countdown, clinical parameters, and multi-organ viability declarations</p>
+      </div>
+    </div>
+
+    <div class="row g-4" id="assessmentsRow">
+      <div class="col-12 text-center py-5 text-muted">Loading organ assessments...</div>
+    </div>
+  </div>
+
+  <!-- Update Assessment Modal -->
+  <div class="modal fade" id="updateAssessmentModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-lifelink-navy text-white">
+          <h5 class="modal-title">Update Organ Assessment</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="updateAssessmentForm">
+          <div class="modal-body">
+            <input type="hidden" id="editAssessmentId">
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Viability Status</label>
+              <select id="editViabilityStatus" class="form-select" required>
+                <option value="PENDING">Pending Evaluation</option>
+                <option value="VIABLE">Viable for Transplant</option>
+                <option value="MARGINAL">Marginal Viability</option>
+                <option value="NON_VIABLE">Non-Viable / Disqualified</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Max Cold Ischemia Limit (Hours)</label>
+              <input type="number" id="editIschemiaHours" class="form-control" required min="1" max="48">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Clinical Examination Notes</label>
+              <textarea id="editClinicalNotes" class="form-control" rows="3" required placeholder="ECHO / LFT / Creatinine findings, macroscopic examination..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Assessment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="text-white mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-heart-pulse-fill text-danger"></i> LifeLink Platform
+          </h5>
+          <p class="text-secondary small">
+            National Smart Emergency Organ Donation Coordination, Green Corridor Real-Time Dispatch & Transparent Medical Logistics Funding.
+          </p>
+          <p class="small text-muted mb-0">Emergency Coordination Helpline: <strong>1800-11-4770</strong></p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6 class="text-white mb-3">Clinical Workflow</h6>
+          <ul class="list-unstyled small">
+            <li><a href="cases.html">Referral Queue</a></li>
+            <li><a href="transport-dashboard.html">Green Corridors</a></li>
+            <li><a href="hospitals.html">Accredited Centers</a></li>
+            <li><a href="driver-dashboard.html">Driver Cockpit</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6 class="text-white mb-3">Funding & Audit</h6>
+          <ul class="list-unstyled small">
+            <li><a href="funding-campaigns.html">Verified Campaigns</a></li>
+            <li><a href="financial-dashboard.html">Finance Reviewer Portal</a></li>
+            <li><a href="reports.html">Transparency Ledger</a></li>
+            <li><a href="terms.html">80G Tax Exemption</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="text-white mb-3">Statutory & Legal</h6>
+          <ul class="list-unstyled small">
+            <li><a href="terms.html">Non-Commercial Organ Policy</a></li>
+            <li><a href="privacy.html">DPDP Act Privacy Compliance</a></li>
+            <li><a href="terms.html">Form 6/8/10 Brain Death Guidelines</a></li>
+            <li><a href="https://notto.mohfw.gov.in/" target="_blank" rel="noopener">National NOTTO Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center small text-muted">
+        <div>&copy; 2026 LifeLink Platform. Built for B.Tech Computer Science Demonstration.</div>
+        <div>Strict Zero-Commercialization Standard</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tracking.js"></script>
+  <script>
+  let currentCaseId = 1;
+
+  async function loadAssessments() {
+    const params = new URLSearchParams(window.location.search);
+    currentCaseId = params.get('caseId') || 1;
+
+    try {
+      const list = await api.getAssessments(currentCaseId);
+      const container = document.getElementById('assessmentsRow');
+      if (!list || list.length === 0) {
+        container.innerHTML = '<div class="col-12 text-center py-5 text-muted">No organ assessments for this case.</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(a => `
+        <div class="col-md-4 col-sm-6">
+          <div class="lifelink-card h-100">
+            <div class="lifelink-card-header">
+              <h6 class="fw-bold mb-0 text-danger"><i class="bi bi-heart-pulse me-1"></i>${a.organType}</h6>
+              ${getAssessmentBadge(a.status)}
+            </div>
+            <div class="lifelink-card-body">
+              <div class="mb-3">
+                <span class="small text-muted d-block">Max Cold Ischemia Window:</span>
+                <strong class="fs-5">${a.maxColdIschemiaHours || '—'} Hours</strong>
+              </div>
+              <div class="mb-3">
+                <span class="small text-muted d-block">Clinical Notes:</span>
+                <p class="small text-secondary mb-0 bg-light p-2 rounded border">${a.clinicalNotes || 'Evaluation pending clinical testing.'}</p>
+              </div>
+              <button class="btn btn-outline-primary btn-sm w-100" onclick="openEditModal(${a.id}, '${a.status}', ${a.maxColdIschemiaHours || 4}, '${escape(a.clinicalNotes || '')}')">Update Viability</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      showToast('Error loading assessments: ' + e.message, 'danger');
+    }
+  }
+
+  function openEditModal(id, status, hours, notes) {
+    document.getElementById('editAssessmentId').value = id;
+    document.getElementById('editViabilityStatus').value = status;
+    document.getElementById('editIschemiaHours').value = hours;
+    document.getElementById('editClinicalNotes').value = unescape(notes);
+    new bootstrap.Modal(document.getElementById('updateAssessmentModal')).show();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadAssessments();
+
+    document.getElementById('updateAssessmentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('editAssessmentId').value;
+      try {
+        await api.updateAssessment(id, {
+          status: document.getElementById('editViabilityStatus').value,
+          maxColdIschemiaHours: parseInt(document.getElementById('editIschemiaHours').value),
+          clinicalNotes: document.getElementById('editClinicalNotes').value
+        });
+        showToast('Organ assessment saved successfully', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('updateAssessmentModal')).hide();
+        loadAssessments();
+      } catch (err) {
+        showToast(err.message, 'danger');
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+/* LifeLink - Emergency Organ Donation Coordination Platform */
+:root {
+  --primary-navy: #0B1B3D;
+  --secondary-navy: #152B52;
+  --accent-red: #D32F2F;
+  --accent-red-hover: #B71C1C;
+  --emerald-green: #00897B;
+  --emerald-light: #E0F2F1;
+  --amber-warning: #FF8F00;
+  --amber-light: #FFF8E1;
+  --text-dark: #1E293B;
+  --text-muted: #64748B;
+  --bg-light: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --border-color: #E2E8F0;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 20px -2px rgba(11, 27, 61, 0.08);
+  --box-shadow-hover: 0 10px 25px -3px rgba(11, 27, 61, 0.12);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Header & Navigation */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #FFFFFF !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand i {
+  color: #FF5252;
+  font-size: 1.6rem;
+}
+
+.bg-lifelink-navy {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link {
+  color: #CBD5E1 !important;
+  font-weight: 500;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #FFFFFF !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hero Section */
+.hero-banner {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, #1A365D 100%);
+  color: #FFFFFF;
+  padding: 4.5rem 0 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(211, 47, 47, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Stat Cards */
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.stat-icon.red { background-color: #FFEBEE; color: var(--accent-red); }
+.stat-icon.green { background-color: var(--emerald-light); color: var(--emerald-green); }
+.stat-icon.blue { background-color: #E3F2FD; color: #1976D2; }
+.stat-icon.amber { background-color: var(--amber-light); color: var(--amber-warning); }
+
+/* Custom Cards */
+.lifelink-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.lifelink-card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lifelink-card-body {
+  padding: 1.5rem;
+}
+
+/* Badges */
+.badge-pulse {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.badge-pulse::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(0, 137, 123, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0); }
+}
+
+/* Workflow Timeline Tracker */
+.workflow-stepper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.workflow-stepper::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 15px;
+  width: 2px;
+  background-color: var(--border-color);
+}
+
+.workflow-step {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.workflow-step-bullet {
+  position: absolute;
+  left: -2rem;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.workflow-step.completed .workflow-step-bullet {
+  border-color: var(--emerald-green);
+  background-color: var(--emerald-green);
+  color: #FFFFFF;
+}
+
+.workflow-step.active .workflow-step-bullet {
+  border-color: var(--accent-red);
+  background-color: #FFFFFF;
+  color: var(--accent-red);
+  box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.2);
+}
+
+/* Map Containers */
+#trackingMap, #hospitalMap {
+  width: 100%;
+  height: 480px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+/* Telemetry Dashboard Box */
+.telemetry-gauge {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+}
+
+.gauge-val {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+/* Buttons */
+.btn-lifelink-primary {
+  background-color: var(--accent-red);
+  border-color: var(--accent-red);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-lifelink-primary:hover {
+  background-color: var(--accent-red-hover);
+  border-color: var(--accent-red-hover);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-lifelink-secondary {
+  background-color: var(--primary-navy);
+  border-color: var(--primary-navy);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+}
+
+.btn-lifelink-secondary:hover {
+  background-color: var(--secondary-navy);
+  color: #FFFFFF;
+}
+
+/* Medical Disclaimer Banner */
+.medical-disclaimer {
+  background-color: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-left: 4px solid #F59E0B;
+  color: #92400E;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Toast Container */
+#toastContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1080;
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-navy);
+  color: #94A3B8;
+  padding: 3rem 0 1.5rem;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #CBD5E1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #FFFFFF;
+}
