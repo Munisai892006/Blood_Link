@@ -361,7 +361,7 @@ export default function MissionControl({ currentRole }) {
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
               <div className="text-[11px] text-slate-500 font-medium">Active Requests</div>
               <div className="mt-1 text-2xl font-black text-rose-700">
-                {adminOverview?.active_requests ?? metrics?.overview.active_emergency_requests ?? 0}
+                {adminOverview?.active_requests ?? metrics?.overview?.active_emergency_requests ?? 0}
               </div>
               <span className="text-[10px] text-slate-500">Live Hospital Triage</span>
             </div>
@@ -369,7 +369,7 @@ export default function MissionControl({ currentRole }) {
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
               <div className="text-[11px] text-slate-500 font-medium">Pending Review</div>
               <div className="mt-1 text-2xl font-black text-amber-600">
-                {adminOverview?.pending_review_requests ?? metrics?.overview.pending_verification ?? 0}
+                {adminOverview?.pending_review_requests ?? metrics?.overview?.pending_verification ?? 0}
               </div>
               <span className="text-[10px] text-amber-700 font-medium">Requires Clinical Review</span>
             </div>

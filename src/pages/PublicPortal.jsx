@@ -118,7 +118,7 @@ export default function PublicPortal({ onNavigate, language }) {
             <Activity className="w-4 h-4 text-rose-600" />
           </div>
           <div className="mt-2 text-2xl font-bold text-slate-900">
-            {metrics ? metrics.overview.active_emergency_requests : '...'}
+            {metrics?.overview?.active_emergency_requests ?? '...'}
           </div>
           <span className="text-[11px] text-rose-600 font-medium">Live Hospital Feeds</span>
         </div>
@@ -129,7 +129,7 @@ export default function PublicPortal({ onNavigate, language }) {
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="mt-2 text-2xl font-bold text-slate-900">
-            {metrics ? metrics.overview.fulfillment_percentage : '94%'}
+            {metrics?.overview?.fulfillment_percentage ?? '94%'}
           </div>
           <span className="text-[11px] text-emerald-600 font-medium">Regional Traumas Met</span>
         </div>
@@ -140,7 +140,7 @@ export default function PublicPortal({ onNavigate, language }) {
             <Users className="w-4 h-4 text-blue-600" />
           </div>
           <div className="mt-2 text-2xl font-bold text-slate-900">
-            {metrics ? metrics.overview.available_donors_online : '...'}
+            {metrics?.overview?.available_donors_online ?? '...'}
           </div>
           <span className="text-[11px] text-blue-600 font-medium">Privacy Masked</span>
         </div>
@@ -151,7 +151,7 @@ export default function PublicPortal({ onNavigate, language }) {
             <AlertTriangle className="w-4 h-4 text-amber-600" />
           </div>
           <div className="mt-2 text-2xl font-bold text-slate-900">
-            {metrics ? metrics.overview.active_incidents : '1'}
+            {metrics?.overview?.active_incidents ?? '1'}
           </div>
           <span className="text-[11px] text-amber-600 font-medium">Multi-Casualty Active</span>
         </div>
