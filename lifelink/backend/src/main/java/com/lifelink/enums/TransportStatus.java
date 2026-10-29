@@ -1,0 +1,16 @@
+package com.lifelink.enums;
+
+public enum TransportStatus {
+    ASSIGNED,
+    ACCEPTED,
+    EN_ROUTE_TO_PICKUP,
+    ARRIVED_AT_PICKUP,
+    ORGAN_LOADED,
+    IN_TRANSIT,
+    GREEN_CORRIDOR_ACTIVE,
+    DELAYED,
+    ARRIVED_AT_DESTINATION,
+    HANDOVER_COMPLETED,
+    CANCELLED,
+    ABORTED
+}

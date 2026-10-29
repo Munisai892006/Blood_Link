@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consent & Legal Compliance — LifeLink Organ Donation Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="medical-disclaimer text-center py-1">
+    <div class="container d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-shield-exclamation text-warning"></i>
+      <span><strong>Statutory Compliance:</strong> LifeLink operates under THOTA 1994. Strictly non-commercial medical logistics. Zero human organ buying/selling.</span>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg bg-lifelink-navy sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <span>LifeLink</span>
+      </a>
+      <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <i class="bi bi-list fs-2 text-white"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cases.html">Donor Cases</a></li>
+          <li class="nav-item"><a class="nav-link " href="transport-dashboard.html">Live Transports</a></li>
+          <li class="nav-item"><a class="nav-link " href="funding-campaigns.html">Logistics Funding</a></li>
+          <li class="nav-item"><a class="nav-link " href="hospitals.html">Hospitals</a></li>
+          <li class="nav-item"><a class="nav-link " href="reports.html">Reports</a></li>
+        </ul>
+        <div id="navbarUserSection" class="d-flex align-items-center gap-2"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+  <div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <a href="cases.html" class="text-decoration-none small text-muted"><i class="bi bi-arrow-left me-1"></i>Back to Cases</a>
+        <h2 class="fw-bold mb-1">Form 6/8/10 Legal Compliance Vault</h2>
+        <p class="text-muted mb-0">Statutory Brain Death Declarations & Legal Heir Witness Verification</p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="lifelink-card">
+          <div class="lifelink-card-header">
+            <h5 class="fw-bold mb-0"><i class="bi bi-file-earmark-person text-success me-2"></i>Legal Heir Consent (Form 6)</h5>
+            <span id="consentBadge"></span>
+          </div>
+          <div class="lifelink-card-body">
+            <form id="consentForm">
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Legal Heir Full Name</label>
+                <input type="text" id="heirName" class="form-control" required placeholder="Next of kin / legal heir name">
+              </div>
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label small fw-semibold">Relationship</label>
+                  <select id="heirRelation" class="form-select" required>
+                    <option value="SPOUSE">Spouse</option>
+                    <option value="PARENT">Parent</option>
+                    <option value="SON_DAUGHTER">Son / Daughter</option>
+                    <option value="SIBLING">Brother / Sister</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label class="form-label small fw-semibold">Contact Phone</label>
+                  <input type="text" id="heirPhone" class="form-control" required placeholder="+91">
+                </div>
+              </div>
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label small fw-semibold">First Witness</label>
+                  <input type="text" id="witness1" class="form-control" required placeholder="Name & relation">
+                </div>
+                <div class="col-6">
+                  <label class="form-label small fw-semibold">Second Witness</label>
+                  <input type="text" id="witness2" class="form-control" required placeholder="Name & relation">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Bereavement Counseling Summary</label>
+                <textarea id="counselingSummary" class="form-control" rows="3" placeholder="Document voluntary consent process, counseling sessions..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-success w-100">Save & Verify Form 6</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="lifelink-card mb-4">
+          <div class="lifelink-card-header">
+            <h5 class="fw-bold mb-0"><i class="bi bi-shield-check text-primary me-2"></i>4-Doctor Medical Board Certifications</h5>
+          </div>
+          <div class="lifelink-card-body">
+            <p class="small text-muted">Under THOTA Act 1994, cadaveric brain death requires two independent evaluations at least 6 hours apart by a board of 4 authorized doctors:</p>
+            <div class="p-3 bg-light rounded border mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong>1st Evaluation: Form 8</strong>
+                <span class="badge bg-success">CERTIFIED</span>
+              </div>
+              <div class="small text-muted">Examined: Apnea test target pCO2 > 60 mmHg reached, absence of brainstem reflexes confirmed.</div>
+            </div>
+            <div class="p-3 bg-light rounded border">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong>2nd Evaluation: Form 10</strong>
+                <span class="badge bg-success">CERTIFIED</span>
+              </div>
+              <div class="small text-muted">Examined 6 hours post-first test: Irreversible cessation of brainstem function confirmed.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="text-white mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-heart-pulse-fill text-danger"></i> LifeLink Platform
+          </h5>
+          <p class="text-secondary small">
+            National Smart Emergency Organ Donation Coordination, Green Corridor Real-Time Dispatch & Transparent Medical Logistics Funding.
+          </p>
+          <p class="small text-muted mb-0">Emergency Coordination Helpline: <strong>1800-11-4770</strong></p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6 class="text-white mb-3">Clinical Workflow</h6>
+          <ul class="list-unstyled small">
+            <li><a href="cases.html">Referral Queue</a></li>
+            <li><a href="transport-dashboard.html">Green Corridors</a></li>
+            <li><a href="hospitals.html">Accredited Centers</a></li>
+            <li><a href="driver-dashboard.html">Driver Cockpit</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6 class="text-white mb-3">Funding & Audit</h6>
+          <ul class="list-unstyled small">
+            <li><a href="funding-campaigns.html">Verified Campaigns</a></li>
+            <li><a href="financial-dashboard.html">Finance Reviewer Portal</a></li>
+            <li><a href="reports.html">Transparency Ledger</a></li>
+            <li><a href="terms.html">80G Tax Exemption</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="text-white mb-3">Statutory & Legal</h6>
+          <ul class="list-unstyled small">
+            <li><a href="terms.html">Non-Commercial Organ Policy</a></li>
+            <li><a href="privacy.html">DPDP Act Privacy Compliance</a></li>
+            <li><a href="terms.html">Form 6/8/10 Brain Death Guidelines</a></li>
+            <li><a href="https://notto.mohfw.gov.in/" target="_blank" rel="noopener">National NOTTO Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center small text-muted">
+        <div>&copy; 2026 LifeLink Platform. Built for B.Tech Computer Science Demonstration.</div>
+        <div>Strict Zero-Commercialization Standard</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tracking.js"></script>
+  <script>
+  let currentCaseId = 1;
+
+  async function loadConsent() {
+    const params = new URLSearchParams(window.location.search);
+    currentCaseId = params.get('caseId') || 1;
+
+    try {
+      const c = await api.getConsent(currentCaseId);
+      document.getElementById('consentBadge').innerHTML = c.status === 'COMPLETED' ? '<span class="badge bg-success">Verified</span>' : '<span class="badge bg-warning text-dark">Pending</span>';
+      if (c.legalHeirName) document.getElementById('heirName').value = c.legalHeirName;
+      if (c.legalHeirRelation) document.getElementById('heirRelation').value = c.legalHeirRelation;
+      if (c.legalHeirContact) document.getElementById('heirPhone').value = c.legalHeirContact;
+      if (c.firstWitnessName) document.getElementById('witness1').value = c.firstWitnessName;
+      if (c.secondWitnessName) document.getElementById('witness2').value = c.secondWitnessName;
+      if (c.counselingSummary) document.getElementById('counselingSummary').value = c.counselingSummary;
+    } catch(e) {}
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadConsent();
+
+    document.getElementById('consentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await api.updateConsent(currentCaseId, {
+          status: 'COMPLETED',
+          legalHeirName: document.getElementById('heirName').value,
+          legalHeirRelation: document.getElementById('heirRelation').value,
+          legalHeirContact: document.getElementById('heirPhone').value,
+          firstWitnessName: document.getElementById('witness1').value,
+          secondWitnessName: document.getElementById('witness2').value,
+          counselingSummary: document.getElementById('counselingSummary').value
+        });
+        showToast('Form 6 consent verified successfully!', 'success');
+        loadConsent();
+      } catch (err) {
+        showToast(err.message, 'danger');
+      }
+    });
+  });
+</script>
+</body>
+</html>

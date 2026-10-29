@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Pilot Cockpit — LifeLink Organ Donation Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="medical-disclaimer text-center py-1">
+    <div class="container d-flex align-items-center justify-content-center gap-2">
+      <i class="bi bi-shield-exclamation text-warning"></i>
+      <span><strong>Statutory Compliance:</strong> LifeLink operates under THOTA 1994. Strictly non-commercial medical logistics. Zero human organ buying/selling.</span>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg bg-lifelink-navy sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <span>LifeLink</span>
+      </a>
+      <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <i class="bi bi-list fs-2 text-white"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link " href="cases.html">Donor Cases</a></li>
+          <li class="nav-item"><a class="nav-link active" href="transport-dashboard.html">Live Transports</a></li>
+          <li class="nav-item"><a class="nav-link " href="funding-campaigns.html">Logistics Funding</a></li>
+          <li class="nav-item"><a class="nav-link " href="hospitals.html">Hospitals</a></li>
+          <li class="nav-item"><a class="nav-link " href="reports.html">Reports</a></li>
+        </ul>
+        <div id="navbarUserSection" class="d-flex align-items-center gap-2"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="card shadow-lg border-0 rounded-4 p-4 text-center mb-4">
+          <span class="badge bg-warning text-dark text-uppercase px-3 py-1 mb-2 align-self-center">ALS Emergency Pilot Cockpit</span>
+          <h3 class="fw-bold mb-1">Active Mission: TRP-2026-001</h3>
+          <p class="text-muted small">Route: NIMS Punjagutta → Apollo Jubilee Hills</p>
+
+          <!-- Status Indicator -->
+          <div class="p-3 bg-light rounded-3 mb-3 border text-start">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted small">Current Mission Status:</span>
+              <span id="driverStatusBadge"><span class="badge bg-success">GREEN CORRIDOR ACTIVE</span></span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted small">Cold Box Chamber:</span>
+              <strong id="driverTemp" class="text-success fs-5">3.2 °C</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="text-muted small">GPS Telemetry Rate:</span>
+              <span class="badge bg-primary">Auto-Push Every 5s</span>
+            </div>
+          </div>
+
+          <!-- Driver Action Buttons -->
+          <div class="d-grid gap-2">
+            <button id="btnArrivedPickup" class="btn btn-outline-primary py-2"><i class="bi bi-geo-alt me-2"></i>Arrived at Donor Hospital</button>
+            <button id="btnOrganLoaded" class="btn btn-outline-warning text-dark py-2"><i class="bi bi-box-seam me-2"></i>Organ Loaded & Box Sealed</button>
+            <button id="btnCorridorStart" class="btn btn-success py-2"><i class="bi bi-shield-check me-2"></i>Activate Green Corridor Pilot</button>
+            <button id="btnArrivedDest" class="btn btn-outline-info text-dark py-2"><i class="bi bi-check2-circle me-2"></i>Arrived at Recipient OT</button>
+            <button id="btnHandover" class="btn btn-lifelink-primary py-2"><i class="bi bi-pen me-2"></i>Complete OT Handover Sign-Off</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="text-white mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-heart-pulse-fill text-danger"></i> LifeLink Platform
+          </h5>
+          <p class="text-secondary small">
+            National Smart Emergency Organ Donation Coordination, Green Corridor Real-Time Dispatch & Transparent Medical Logistics Funding.
+          </p>
+          <p class="small text-muted mb-0">Emergency Coordination Helpline: <strong>1800-11-4770</strong></p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6 class="text-white mb-3">Clinical Workflow</h6>
+          <ul class="list-unstyled small">
+            <li><a href="cases.html">Referral Queue</a></li>
+            <li><a href="transport-dashboard.html">Green Corridors</a></li>
+            <li><a href="hospitals.html">Accredited Centers</a></li>
+            <li><a href="driver-dashboard.html">Driver Cockpit</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6 class="text-white mb-3">Funding & Audit</h6>
+          <ul class="list-unstyled small">
+            <li><a href="funding-campaigns.html">Verified Campaigns</a></li>
+            <li><a href="financial-dashboard.html">Finance Reviewer Portal</a></li>
+            <li><a href="reports.html">Transparency Ledger</a></li>
+            <li><a href="terms.html">80G Tax Exemption</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="text-white mb-3">Statutory & Legal</h6>
+          <ul class="list-unstyled small">
+            <li><a href="terms.html">Non-Commercial Organ Policy</a></li>
+            <li><a href="privacy.html">DPDP Act Privacy Compliance</a></li>
+            <li><a href="terms.html">Form 6/8/10 Brain Death Guidelines</a></li>
+            <li><a href="https://notto.mohfw.gov.in/" target="_blank" rel="noopener">National NOTTO Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center small text-muted">
+        <div>&copy; 2026 LifeLink Platform. Built for B.Tech Computer Science Demonstration.</div>
+        <div>Strict Zero-Commercialization Standard</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tracking.js"></script>
+  <script>
+  const missionId = 1;
+
+  async function updateStatus(st, notes) {
+    try {
+      await api.updateTransportStatus(missionId, { status: st, reasonNotes: notes });
+      showToast('Status updated to ' + st, 'success');
+      document.getElementById('driverStatusBadge').innerHTML = getTransportBadge(st);
+    } catch (e) {
+      showToast(e.message, 'danger');
+    }
+  }
+
+  document.getElementById('btnArrivedPickup').onclick = () => updateStatus('ARRIVED_AT_PICKUP', 'Driver reached donor hospital NIMS');
+  document.getElementById('btnOrganLoaded').onclick = () => updateStatus('ORGAN_LOADED', 'Heart loaded in calibrated perfusion container');
+  document.getElementById('btnCorridorStart').onclick = () => updateStatus('GREEN_CORRIDOR_ACTIVE', 'Pilot underway with police escort');
+  document.getElementById('btnArrivedDest').onclick = () => updateStatus('ARRIVED_AT_DESTINATION', 'Arrived at Apollo Hospitals OT entrance');
+  document.getElementById('btnHandover').onclick = () => {
+    const doc = prompt('Enter recipient OT surgeon name:', 'Dr. Ananya Rao');
+    if (doc) {
+      api.updateTransportStatus(missionId, { status: 'HANDOVER_COMPLETED', handoverSignedBy: doc, reasonNotes: 'Safe delivery at OT' })
+        .then(() => {
+          showToast('Delivery sign-off complete!', 'success');
+          document.getElementById('driverStatusBadge').innerHTML = getTransportBadge('HANDOVER_COMPLETED');
+        });
+    }
+  };
+</script>
+</body>
+</html>
